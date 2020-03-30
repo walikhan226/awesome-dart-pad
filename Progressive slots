@@ -1,0 +1,888 @@
+// Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+import "dart:async";
+import 'package:flutter/material.dart';
+import 'dart:math';
+
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: MyHomePage(title: ''),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+var nums = [0,0,0];
+var nums1 = [0,0,0];
+var colours = [0,0,0];
+String dropdownValue1 = '0';
+String dropdownValue2 = '0';
+String dropdownValue3 = '0';
+var drops =[0,0,0];
+
+String dialogtxt = "";
+
+bool _isButtonDisabled = false;
+
+
+void reset(){
+
+  setState(() {
+ dropdownValue1 = '0';
+ dropdownValue2 = '0';
+ dropdownValue3 = '0';
+_isButtonDisabled = false;
+
+for(var i=0; i<3;i++){
+
+nums[i]=0;
+nums1[i]=0;
+drops[i]=0;
+}
+  });
+ 
+
+
+
+
+
+}
+Future <void> timer1() async{
+setState(() {
+  _isButtonDisabled=true;
+  
+
+ 
+
+
+
+});
+
+   await new Future.delayed(const Duration(seconds: 9));
+setState(() {
+
+
+print("done");
+
+_isButtonDisabled=false;
+});
+
+  
+
+
+showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(20.0)), //this right here
+        child: Container(
+          height: 200,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: '$dialogtxt'),
+                ),
+                SizedBox(
+                  width: 320.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      reset();
+Navigator.pop(context);
+
+                    },
+                    child: Text(
+                      "Try again",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: const Color(0xFF1BC0C5),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    });
+
+
+
+
+}
+
+
+Future<void>  numbergenerator () async{
+
+
+
+var randomizer = new Random();
+  nums1[0] = randomizer.nextInt(10);
+  nums1[1] = randomizer.nextInt(10);
+  nums1[2] = randomizer.nextInt(10);
+
+setState(() {
+  colours[0]=randomizer.nextInt(250);
+colours[1]=randomizer.nextInt(250);
+colours[2]=randomizer.nextInt(250);
+
+});
+
+
+
+bool stop1 = false;
+
+bool stop2 = false;
+
+bool stop3 = false;
+ 
+
+
+
+for(var i=0;i<=9;i++){
+
+if(i==7){
+
+
+stop1=true;
+
+
+
+}
+if(i==8){
+
+stop2=true;
+
+
+
+}
+if(i==9){
+
+
+stop3=true;
+
+
+}
+
+for(var j=0;j<10;j++) {
+
+
+  await new Future.delayed(const Duration(milliseconds : 90));
+  
+
+setState(() {
+
+
+if(stop1==false){ 
+  
+   nums[0]=j;
+   
+   }else {
+
+nums[0]=nums1[0];
+
+   }
+
+
+if(stop2==false){  
+  
+  
+  nums[1]=j;
+  
+  }
+  else {
+
+nums[1]=nums1[1];
+
+   }
+if(stop3==false){ 
+  
+  
+   nums[2]=j;
+   
+   
+   
+   }else {
+
+nums[2]=nums1[2];
+
+   }
+
+
+
+
+});
+}}
+
+if(drops[0]==nums[0]&&drops[1]==nums[1]&&drops[2]==nums[2]){
+
+
+setState(() {
+
+dialogtxt="You want all three number matched";
+
+});
+
+
+}
+else {
+
+
+setState(() {
+dialogtxt="Sorry you lost, try again";
+
+});
+
+
+}
+
+
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+   
+      
+     body: AbsorbPointer(
+
+       absorbing: _isButtonDisabled,
+            child: Column(
+
+
+
+
+children: <Widget>[
+
+        Column(
+           // mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              
+               Center(
+                 child: Text(
+        'Progressive slots',
+        textScaleFactor: 1.0, // disables accessibility
+        style: TextStyle(
+          fontSize: 40.0
+        ),
+    ),
+               ),
+              
+            ],
+          ),
+       
+
+       
+
+Padding(
+  padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
+  child:   Row(
+  
+    children: <Widget>[
+  
+
+
+
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: DropdownButton<String>(
+  
+        
+  
+              value: dropdownValue1,
+  
+        
+  
+              icon: Icon(Icons.arrow_downward),
+  
+        
+  
+              iconSize: 24,
+  
+        
+  
+              elevation: 16,
+  
+        
+  
+              style: TextStyle(
+  
+        
+  
+                color: Colors.deepPurple
+  
+        
+  
+              ),
+  
+        
+  
+              underline: Container(
+  
+        
+  
+                height: 2,
+  
+        
+  
+                color: Colors.deepPurpleAccent,
+  
+        
+  
+              ),
+  
+        
+  
+              onChanged: (String newValue) {
+  
+        
+  
+                setState(() {
+  
+        
+  
+                  dropdownValue1 = newValue;
+                  drops[0]= int.parse( dropdownValue1);
+        
+  
+                });
+  
+        
+  
+              },
+  
+        
+  
+              items: <String>['0', '1', '2', '3','4','5','6','7','8','9']
+  
+        
+  
+                .map<DropdownMenuItem<String>>((String value) {
+  
+        
+                  return DropdownMenuItem<String>(
+  
+        
+                    value: value,
+  
+                    child: Text(value,
+
+  
+                    style: TextStyle(
+
+        fontSize: 40,
+  
+        
+  
+                    ),
+  
+        
+  
+                    ),
+  
+        
+  
+                  );
+  
+        
+  
+                })
+  
+        
+  
+                .toList(),
+  
+        
+  
+          ),
+            ),
+  
+  
+  
+  Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: DropdownButton<String>(
+    
+          
+    
+              value: dropdownValue2,
+    
+          
+    
+              icon: Icon(Icons.arrow_downward),
+    
+          
+    
+              iconSize: 24,
+    
+          
+    
+              elevation: 16,
+    
+          
+    
+              style: TextStyle(
+    
+          
+    
+                color: Colors.deepPurple
+    
+          
+    
+              ),
+    
+          
+    
+              underline: Container(
+    
+          
+    
+                height: 2,
+    
+          
+    
+                color: Colors.deepPurpleAccent,
+    
+          
+    
+              ),
+    
+          
+    
+              onChanged: (String newValue) {
+    
+          
+    
+                setState(() {
+    
+          
+    
+                  dropdownValue2 = newValue;
+    
+            drops[1]= int.parse( dropdownValue2);
+    
+                });
+    
+          
+    
+              },
+    
+          
+    
+              items: <String>['0', '1', '2', '3','4','5','6','7','8','9']
+    
+          
+    
+                .map<DropdownMenuItem<String>>((String value) {
+    
+          
+    
+                  return DropdownMenuItem<String>(
+    
+          
+    
+                    value: value,
+    
+          
+    
+                    child: Text(value,
+    
+          
+    
+                    style: TextStyle(
+    
+          
+    
+          
+    
+          
+    
+          fontSize: 40,
+    
+          
+    
+          
+    
+          
+    
+          
+    
+          
+    
+          
+    
+          
+    
+                    ),
+    
+          
+    
+                    ),
+    
+          
+    
+                  );
+    
+          
+    
+                })
+    
+          
+    
+                .toList(),
+    
+          
+    
+            ),
+  ),
+  
+  Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: DropdownButton<String>(
+    
+          
+    
+              value: dropdownValue3,
+    
+          
+    
+              icon: Icon(Icons.arrow_downward),
+    
+          
+    
+              iconSize: 24,
+    
+          
+    
+              elevation: 26,
+    
+          
+    
+              style: TextStyle(
+    
+          
+    
+                color: Colors.deepPurple
+    
+          
+    
+              ),
+    
+          
+    
+              underline: Container(
+    
+          
+    
+                height: 2,
+    
+          
+    
+                color: Colors.deepPurpleAccent,
+    
+          
+    
+              ),
+    
+          
+    
+              onChanged: (String newValue) {
+    
+          
+    
+                setState(() {
+    
+          
+    
+                  dropdownValue3 = newValue;
+    
+            drops[2]= int.parse( dropdownValue3);
+    
+                });
+    
+          
+    
+              },
+    
+          
+    
+              items: <String>['0', '1', '2', '3','4','5','6','7','8','9']
+    
+          
+    
+                .map<DropdownMenuItem<String>>((String value) {
+    
+          
+    
+                  return DropdownMenuItem<String>(
+    
+          
+    
+                    value: value,
+    
+          
+    
+                    child: Text(value,
+    
+          
+    
+                    style: TextStyle(
+    
+          
+    
+          
+    
+          
+    
+          fontSize: 40,
+    
+          
+    
+          
+    
+          
+    
+          
+    
+          
+    
+          
+    
+          
+    
+                    ),
+    
+          
+    
+                    ),
+    
+          
+    
+                  );
+    
+          
+    
+                })
+    
+          
+    
+                .toList(),
+    
+          
+    
+            ),
+  ),
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    ],
+  
+  ),
+),
+
+Padding(
+  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+  child:   Text("Select any three digit number and press start",
+  
+  style: TextStyle(
+  
+  fontSize: 18
+  
+  
+  
+  )
+  
+  ,
+  
+  ),
+),
+SizedBox(
+
+
+
+   width: 300.0,
+  height: 100.0,
+  child:   Padding(
+  
+
+
+    padding: const EdgeInsets.all(12.0),
+  
+  
+            child: RaisedButton(
+  
+        
+  
+          child: Text('START',
+  
+          
+  
+              style: TextStyle(
+  
+        
+  
+                fontSize: 20.0
+  
+        
+  
+              )
+  
+          ),
+  
+  
+        color: Color.fromRGBO(250,200, 250, 100),
+  
+          onPressed: () {
+  
+  
+  timer1();
+   numbergenerator();
+  
+
+ 
+  
+
+
+          },
+  
+        
+  
+        ),
+   
+  
+  ),
+),
+Row(
+children: <Widget>[
+
+
+
+  
+Padding(
+  padding: const EdgeInsets.fromLTRB(120, 30, 0, 0),
+  child:   Text(nums[0].toString(),
+  
+   
+  
+          style: TextStyle(
+  color: Color.fromRGBO(colours[0], colours[1], colours[2], 90),
+            fontSize: 60.0
+  
+          )
+          
+          
+  
+        ),
+),  
+Padding(
+  padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
+  child:   Text( nums[1].toString(),
+  
+   
+  
+          style: TextStyle(
+  color: Color.fromRGBO(colours[2], colours[1], colours[0], 150),
+            fontSize: 60.0
+  
+          )
+  
+        ),
+),
+Padding(
+  padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
+  child:   Text(nums[2].toString(),
+  
+   
+  
+          style: TextStyle(
+  color: Color.fromRGBO(colours[1], colours[0], colours[2], 90),
+            fontSize: 60.0
+  
+          )
+  
+        ),
+)
+
+
+
+
+
+
+            
+]
+
+
+
+  
+
+  
+  
+    
+  
+  ),
+
+
+],
+
+
+       ),
+     ), 
+      
+     
+
+
+    
+     
+     
+   
+    
+
+
+
+
+    );
+  }
+}
